@@ -73,7 +73,7 @@
   export default defineComponent({
     name: "HelloWorld",
     setup: () => {
-      const results = ref<QvKandidat>({});
+      const results = ref<QvKandidat>({} as QvKandidat);
       const ahvNr = ref("");
       const birthdate = ref("");
       const editing = ref(true);
