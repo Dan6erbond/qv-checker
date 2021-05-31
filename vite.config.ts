@@ -5,7 +5,9 @@ import { defineConfig } from "vite";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue()],
-  alias: {
-    "/@/": join(__dirname, "src"),
+  resolve: {
+    alias: {
+      "@/": join(__dirname, "src"),
+    },
   },
 });
