@@ -9,6 +9,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "equal-vue": "^0.74.0",
     "vue": "^3.0.5"
   },
   "devDependencies": {
