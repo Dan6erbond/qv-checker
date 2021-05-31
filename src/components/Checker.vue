@@ -14,7 +14,7 @@
           numericOnly: true,
           prefix: '756',
         }"
-        aria-autocomplete="ahvnr"
+        name="ahvnr"
       />
       <va-input
         class="mb-4"
@@ -24,7 +24,7 @@
         placeholder="dd.mm.yyyy"
         :returnRaw="false"
         :mask="{ date: true, delimiter: '.', datePattern: ['d', 'm', 'Y'] }"
-        aria-autocomplete="birthday"
+        name="birthday"
       />
       <div class="submit-container">
         <va-button type="submit">Submit</va-button>
