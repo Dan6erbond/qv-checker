@@ -1,27 +1,68 @@
-<template></template>
+<template>
+  <div class="checker">
+    <it-button type="primary" html-type="submit">Button</it-button>
+  </div>
+</template>
 
 <script lang="ts">
-  import { defineComponent } from "vue";
+  import { defineComponent, ref } from "vue";
+  import { useCountdown } from "@/hooks/useCountdown";
+  import { QvKandidat } from "@/types/api";
+
   export default defineComponent({
     name: "HelloWorld",
-    setup: () => {},
+    setup: () => {
+      const results = ref<QvKandidat>({} as QvKandidat);
+      const ahvNr = ref("");
+      const birthdate = ref("");
+      const editing = ref(true);
+      const countdownTime = 5 * 60;
+
+      const { start, countdown } = useCountdown(countdownTime, async () => {
+        const res = await fetch(
+          "https://www.ag.ch/app/qvserviceapi/services/qv_info/kandidat",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              ahvNr: ahvNr.value,
+              birthdate: birthdate.value,
+            }),
+          },
+        );
+        results.value = await res.json();
+        start();
+      });
+
+      const submit = () => {
+        if (ahvNr.value && birthdate.value) {
+          editing.value = false;
+          start();
+        }
+      };
+
+      return {
+        ahvNr,
+        birthdate,
+        editing,
+        submit,
+        results,
+        countdown,
+        countdownTime,
+      };
+    },
   });
 </script>
 
 <style scoped>
-  a {
-    color: #42b983;
+  .checker {
+    padding: 2rem;
   }
 
-  label {
-    margin: 0 0.5em;
-    font-weight: bold;
-  }
-
-  code {
-    background-color: #eee;
-    padding: 2px 4px;
-    border-radius: 4px;
-    color: #304455;
+  .submit-container {
+    display: flex;
+    flex-direction: row-reverse;
   }
 </style>
