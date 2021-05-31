@@ -68,32 +68,22 @@
 <script lang="ts">
   import { defineComponent, ref } from "vue";
   import { useCountdown } from "@/hooks/useCountdown";
-  import { QvKandidat } from "@/types/api";
+  import { useQvResults } from "@/hooks/useQvResults";
 
   export default defineComponent({
     name: "HelloWorld",
     setup: () => {
-      const results = ref<QvKandidat>({} as QvKandidat);
       const ahvNr = ref("");
       const birthdate = ref("");
       const editing = ref(true);
-      const countdownTime = 2;
+      const countdownTime = 5 * 60;
+      const { data: results, load } = useQvResults();
 
       const { start, countdown } = useCountdown(countdownTime, async () => {
-        const res = await fetch(
-          "https://www.ag.ch/app/qvserviceapi/services/qv_info/kandidat",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              ahvNr: ahvNr.value,
-              geburtsdatum: birthdate.value,
-            }),
-          },
-        );
-        results.value = await res.json();
+        await load({
+          ahvNr: ahvNr.value,
+          birthdate: birthdate.value,
+        });
         start();
       });
 
