@@ -13,7 +13,8 @@
     "paths": {
       "@/*": ["src/*"]
     },
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "types": ["vite/client"]
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]
 }

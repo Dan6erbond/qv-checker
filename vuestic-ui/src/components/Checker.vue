@@ -77,7 +77,7 @@
       const ahvNr = ref("");
       const birthdate = ref("");
       const editing = ref(true);
-      const countdownTime = 2;
+      const countdownTime = 5 * 60;
 
       const { start, countdown } = useCountdown(countdownTime, async () => {
         const res = await fetch(
@@ -89,7 +89,7 @@
             },
             body: JSON.stringify({
               ahvNr: ahvNr.value,
-              geburtsdatum: birthdate.value,
+              birthdate: birthdate.value,
             }),
           },
         );
