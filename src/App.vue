@@ -1,4 +1,9 @@
 <template>
+  <va-navbar color="dark" class="mb-2">
+    <template #left>
+      <va-navbar-item>QV Checker</va-navbar-item>
+    </template>
+  </va-navbar>
   <Checker />
 </template>
 
@@ -19,8 +24,5 @@
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
   }
 </style>

@@ -1,27 +1,129 @@
-<template></template>
+<template>
+  <div class="checker p-4">
+    <va-form tag="form" @submit.prevent="submit" v-if="editing">
+      <va-input
+        class="mb-4"
+        label="AHV-Nr."
+        v-model="ahvNr"
+        :rules="[(value) => (value && value.length > 0) || 'Field is required']"
+        placeholder="756.####.####.##"
+        :returnRaw="false"
+        :mask="{
+          delimiter: '.',
+          blocks: [3, 4, 4, 2],
+          numericOnly: true,
+          prefix: '756',
+        }"
+        aria-autocomplete="ahvnr"
+      />
+      <va-input
+        class="mb-4"
+        label="Birthdate"
+        v-model="birthdate"
+        :rules="[(value) => (value && value.length > 0) || 'Field is required']"
+        placeholder="dd.mm.yyyy"
+        :returnRaw="false"
+        :mask="{ date: true, delimiter: '.', datePattern: ['d', 'm', 'Y'] }"
+        aria-autocomplete="birthday"
+      />
+      <div class="submit-container">
+        <va-button type="submit">Submit</va-button>
+      </div>
+    </va-form>
+    <va-card v-else>
+      <va-card-title>Results</va-card-title>
+      <va-card-content>
+        <va-list-item>
+          <va-list-item-section> First Name </va-list-item-section>
+          <va-list-item-label caption>
+            {{ results.vorname }}
+          </va-list-item-label>
+        </va-list-item>
+        <va-list-item>
+          <va-list-item-section> Last Name </va-list-item-section>
+          <va-list-item-label caption> {{ results.name }} </va-list-item-label>
+        </va-list-item>
+        <va-list-item>
+          <va-list-item-section> Job Title </va-list-item-section>
+          <va-list-item-label caption>
+            {{ results.berufBezeichnung }}
+          </va-list-item-label>
+        </va-list-item>
+        <va-list-item>
+          <va-list-item-section> Result </va-list-item-section>
+          <va-list-item-label caption>
+            {{ results.freigabeResultat }}
+          </va-list-item-label>
+        </va-list-item>
+        <va-list-item>
+          <va-progress-bar
+            :model-value="((countdownTime - countdown) * 100) / countdownTime"
+          />
+        </va-list-item>
+      </va-card-content>
+    </va-card>
+  </div>
+</template>
 
 <script lang="ts">
-  import { defineComponent } from "vue";
+  import { defineComponent, ref } from "vue";
+  import { useCountdown } from "@/hooks/useCountdown";
+  import { QvKandidat } from "@/types/api";
+
   export default defineComponent({
     name: "HelloWorld",
-    setup: () => {},
+    setup: () => {
+      const results = ref<QvKandidat>({});
+      const ahvNr = ref("");
+      const birthdate = ref("");
+      const editing = ref(true);
+      const countdownTime = 2;
+
+      const { start, countdown } = useCountdown(countdownTime, async () => {
+        const res = await fetch(
+          "https://www.ag.ch/app/qvserviceapi/services/qv_info/kandidat",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              ahvNr: ahvNr.value,
+              geburtsdatum: birthdate.value,
+            }),
+          },
+        );
+        results.value = await res.json();
+        start();
+      });
+
+      const submit = () => {
+        if (ahvNr.value && birthdate.value) {
+          editing.value = false;
+          start();
+        }
+      };
+
+      return {
+        ahvNr,
+        birthdate,
+        editing,
+        submit,
+        results,
+        countdown,
+        countdownTime,
+      };
+    },
   });
 </script>
 
 <style scoped>
-  a {
-    color: #42b983;
+  .checker {
+    padding: 2rem;
   }
 
-  label {
-    margin: 0 0.5em;
-    font-weight: bold;
-  }
-
-  code {
-    background-color: #eee;
-    padding: 2px 4px;
-    border-radius: 4px;
-    color: #304455;
+  .submit-container {
+    display: flex;
+    flex-direction: row-reverse;
   }
 </style>
