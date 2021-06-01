@@ -36,8 +36,10 @@ export default defineConfig({
     rollupOptions: {
       onwarn(warning, warn) {
         // suppress eval warnings
-        if (warning.code === 'EVAL') return
-        warn(warning)
+        if (warning.code === "EVAL") {
+          console.error(`${warning.loc.file} [${warning.loc.line}:${warning.loc.column}]`, "-", warning.message);
+        }
+        warn(warning);
       },
     },
   },
