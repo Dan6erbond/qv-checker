@@ -35,7 +35,7 @@
       <va-card-content>
         <va-list-item>
           <va-list-item-section> First Name </va-list-item-section>
-          <va-list-item-label caption v-if="!loading && results">
+          <va-list-item-label caption v-if="results">
             {{ results.vorname }}
           </va-list-item-label>
           <va-list-item-label caption v-else>
@@ -44,7 +44,7 @@
         </va-list-item>
         <va-list-item>
           <va-list-item-section> Last Name </va-list-item-section>
-          <va-list-item-label caption v-if="!loading && results">
+          <va-list-item-label caption v-if="results">
             {{ results.name }}
           </va-list-item-label>
           <va-list-item-label caption v-else>
@@ -53,7 +53,7 @@
         </va-list-item>
         <va-list-item>
           <va-list-item-section> Job Title </va-list-item-section>
-          <va-list-item-label caption v-if="!loading && results">
+          <va-list-item-label caption v-if="results">
             {{ results.berufBezeichnung }}
           </va-list-item-label>
           <va-list-item-label caption v-else>
@@ -62,7 +62,7 @@
         </va-list-item>
         <va-list-item>
           <va-list-item-section> Result </va-list-item-section>
-          <va-list-item-label caption v-if="!loading && results">
+          <va-list-item-label caption v-if="results">
             {{ results.freigabeResultat }}
           </va-list-item-label>
           <va-list-item-label caption v-else>
