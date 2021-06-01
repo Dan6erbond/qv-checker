@@ -73,11 +73,6 @@
             </va-list-item-label>
           </va-list-item-section>
         </va-list-item>
-        <va-list-item v-if="loading">
-          <div class="row justify--center">
-            <va-progress-circle indeterminate />
-          </div>
-        </va-list-item>
         <va-list-item>
           <va-progress-bar
             :model-value="((countdownTime - countdown) * 100) / countdownTime"
