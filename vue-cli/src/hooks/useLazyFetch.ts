@@ -21,10 +21,10 @@ export const useLazyFetch = <T>(input: RequestInfo, init?: RequestInit) => {
     } catch (error) {
       error.value = error;
       throw error;
-    } finally {
-      loading.value = false;
-      return dat;
     }
+
+    loading.value = false;
+    return dat;
   };
 
   return { data, loading, error, load };
