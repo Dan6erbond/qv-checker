@@ -123,7 +123,7 @@
         if (error && error !== prevError) {
           toast.init({
             title: "Error!",
-            message: JSON.stringify(error, null, 2),
+            message: error.message ?? JSON.stringify(error, null, 2),
             color: "danger",
           });
         }
