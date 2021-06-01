@@ -1,0 +1,8 @@
+{
+  "name": "qv-checker/functions",
+  "version": "0.0.1",
+  "dependencies": {
+    "@netlify/functions": "^0.7.2",
+    "node-fetch": "^2.6.1"
+  }
+}
