@@ -1,16 +1,20 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+  <va-navbar color="dark" class="mb-2">
+    <template #left>
+      <va-navbar-item>QV Checker</va-navbar-item>
+    </template>
+  </va-navbar>
+  <Checker />
 </template>
 
 <script lang="ts">
   import { defineComponent } from "vue";
-  import HelloWorld from "./components/HelloWorld.vue";
+  import Checker from "./components/Checker.vue";
 
   export default defineComponent({
     name: "App",
     components: {
-      HelloWorld,
+      Checker,
     },
   });
 </script>
@@ -20,8 +24,5 @@
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
   }
 </style>
