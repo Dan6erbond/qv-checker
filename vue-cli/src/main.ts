@@ -6,5 +6,8 @@ import "./registerServiceWorker";
 import "@/styles/utils.css";
 
 const app = createApp(App);
+
 app.use(VuesticPlugin);
+app.provide("toast", app.config.globalProperties.$vaToast);
+
 app.mount("#app");

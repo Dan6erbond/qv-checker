@@ -84,9 +84,10 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, ref, watch } from "vue";
   import { useCountdown } from "@/hooks/useCountdown";
   import { useQvResults } from "@/hooks/useQvResults";
+  import { useToast } from "@/hooks/useToast";
+  import { defineComponent, ref, watch } from "vue";
 
   export default defineComponent({
     name: "HelloWorld",
@@ -96,6 +97,7 @@
       const editing = ref(true);
       const countdownTime = 5 * 60;
       const { data: results, load, loading, error } = useQvResults();
+      const toast = useToast();
 
       const { start, countdown } = useCountdown(countdownTime, async () => {
         await load({
@@ -116,8 +118,15 @@
         }
       };
 
-      watch(error, (error) => {
+      watch(error, (error, prevError) => {
         console.error(error);
+        if (error && error !== prevError) {
+          toast.init({
+            title: "Error!",
+            message: JSON.stringify(error, null, 2),
+            color: "danger",
+          });
+        }
       });
 
       return {
