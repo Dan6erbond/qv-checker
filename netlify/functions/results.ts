@@ -1,6 +1,12 @@
 import { Handler } from "@netlify/functions";
 import fetch from "node-fetch";
 
+const headers = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "Content-Type",
+  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
+};
+
 const handler: Handler = async function (event) {
   const { ahvNr, birthdate } = JSON.parse(event.body!);
 
@@ -21,10 +27,8 @@ const handler: Handler = async function (event) {
   const json = await res.json();
 
   return {
+    headers,
     statusCode: 200,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-    },
     body: JSON.stringify(json),
   };
 };
