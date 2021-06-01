@@ -11,7 +11,9 @@ type FetchParams = { ahvNr: string; birthdate: string };
 
 export const useQvResults = () => {
   const { load, ...result } = useLazyFetch<QvKandidat>(
-    "https://qv-checker.netlify.app/.netlify/functions/results",
+    process.env.NODE_ENV === "production"
+      ? "/.netlify/functions/results"
+      : "https://qv-checker.netlify.app/.netlify/functions/results",
     {
       method: "POST",
       headers: {
