@@ -32,4 +32,13 @@ export default defineConfig({
       "vue-router",
     ],
   },
+  build: {
+    rollupOptions: {
+      onwarn(warning, warn) {
+        // suppress eval warnings
+        if (warning.code === 'EVAL') return
+        warn(warning)
+      },
+    },
+  },
 });
