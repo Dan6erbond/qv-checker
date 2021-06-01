@@ -1,6 +1,5 @@
 [build]
-  base = "vue-cli/"
-  publish = "dist/"
+  publish = "vue-cli/dist/"
 
 [functions]
-  directory = "/netlify/functions/"
+  directory = "../netlify/functions/"

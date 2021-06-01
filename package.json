@@ -1,6 +1,9 @@
 {
-  "name": "qv-checker/functions",
+  "name": "qv-checker-functions",
   "version": "0.0.1",
+  "scripts": {
+    "build": "cd vue-cli && yarn && yarn build"
+  },
   "dependencies": {
     "@netlify/functions": "^0.7.2",
     "node-fetch": "^2.6.1"
