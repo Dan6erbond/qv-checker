@@ -13,6 +13,7 @@ export const useLazyFetch = <T>(input: RequestInfo, init?: RequestInit) => {
       if (!res.ok || !res.status.toString().startsWith("2")) {
         const e = await res.text();
         error.value = e;
+        loading.value = false;
         throw new Error(e);
       } else {
         dat = await res.json();
@@ -20,6 +21,7 @@ export const useLazyFetch = <T>(input: RequestInfo, init?: RequestInit) => {
       }
     } catch (error) {
       error.value = error;
+      loading.value = false;
       throw error;
     }
 

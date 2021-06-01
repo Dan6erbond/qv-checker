@@ -35,25 +35,44 @@
       <va-card-content>
         <va-list-item>
           <va-list-item-section> First Name </va-list-item-section>
-          <va-list-item-label caption>
+          <va-list-item-label caption v-if="!loading && !results">
             {{ results.vorname }}
+          </va-list-item-label>
+          <va-list-item-label caption v-else>
+            <va-progress-circle size="sm" indeterminate />
           </va-list-item-label>
         </va-list-item>
         <va-list-item>
           <va-list-item-section> Last Name </va-list-item-section>
-          <va-list-item-label caption> {{ results.name }} </va-list-item-label>
+          <va-list-item-label caption v-if="!loading && !results">
+            {{ results.name }}
+          </va-list-item-label>
+          <va-list-item-label caption v-else>
+            <va-progress-circle size="sm" indeterminate />
+          </va-list-item-label>
         </va-list-item>
         <va-list-item>
           <va-list-item-section> Job Title </va-list-item-section>
-          <va-list-item-label caption>
+          <va-list-item-label caption v-if="!loading && !results">
             {{ results.berufBezeichnung }}
+          </va-list-item-label>
+          <va-list-item-label caption v-else>
+            <va-progress-circle size="sm" indeterminate />
           </va-list-item-label>
         </va-list-item>
         <va-list-item>
           <va-list-item-section> Result </va-list-item-section>
-          <va-list-item-label caption>
+          <va-list-item-label caption v-if="!loading && !results">
             {{ results.freigabeResultat }}
           </va-list-item-label>
+          <va-list-item-label caption v-else>
+            <va-progress-circle size="sm" indeterminate />
+          </va-list-item-label>
+        </va-list-item>
+        <va-list-item v-if="loading">
+          <div class="row justify--center">
+            <va-progress-circle indeterminate />
+          </div>
         </va-list-item>
         <va-list-item>
           <va-progress-bar
@@ -77,7 +96,7 @@
       const birthdate = ref("");
       const editing = ref(true);
       const countdownTime = 5 * 60;
-      const { data: results, load } = useQvResults();
+      const { data: results, load, loading } = useQvResults();
 
       const { start, countdown } = useCountdown(countdownTime, async () => {
         await load({
@@ -106,6 +125,7 @@
         results,
         countdown,
         countdownTime,
+        loading,
       };
     },
   });
