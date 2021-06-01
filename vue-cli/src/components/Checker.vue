@@ -84,7 +84,7 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, ref } from "vue";
+  import { defineComponent, ref, watch } from "vue";
   import { useCountdown } from "@/hooks/useCountdown";
   import { useQvResults } from "@/hooks/useQvResults";
 
@@ -95,7 +95,7 @@
       const birthdate = ref("");
       const editing = ref(true);
       const countdownTime = 5 * 60;
-      const { data: results, load, loading } = useQvResults();
+      const { data: results, load, loading, error } = useQvResults();
 
       const { start, countdown } = useCountdown(countdownTime, async () => {
         await load({
@@ -115,6 +115,10 @@
           start();
         }
       };
+
+      watch(error, (error) => {
+        console.error(error);
+      });
 
       return {
         ahvNr,
