@@ -16,6 +16,8 @@ The AG.ch website provided by the canton Aargau does not poll the endpoint and p
 
 This application fetches the payload from the endpoint used behind the scenes over a proxy endpoint deployed to Netlify functions. It also uses masks with [Cleave.js](https://nosir.github.io/cleave.js/) to ensure the inputs match the expected format and leverages the Vue 3 composition API to manage the compartmentalized features.
 
-All the logical composition functions can be found in [`vue-cli/src/hooks`](./vue-cli/src/hooks) and the checker component is implemented as its own isolated SFC found in [`vue-cli/src/components/Checker.vue`](./vue-cli/src/components/Checker.vue). The Netlify function and configuration are at the root level as the Vite build still has some issues with Vuestic UI, which was used for this project.
+All the logical composition functions can be found in the Vue CLI source under [`vue-cli/src/hooks`](./vue-cli/src/hooks) and the checker component is implemented as its own isolated SFC found in [`vue-cli/src/components/Checker.vue`](./vue-cli/src/components/Checker.vue). Vue CLI was finally used for this project as the Vite build still has some issues with Vuestic UI, which was used to implement the component structure.
+
+The Netlify functions and configuration files can be found at the root level, which also leverage Typescript and a custom build script found in the [`package.json`](./package.json).
 
 © 2021, RaviAnand M.
