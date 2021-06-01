@@ -19,10 +19,10 @@ export const useLazyFetch = <T>(input: RequestInfo, init?: RequestInit) => {
         dat = await res.json();
         data.value = dat as any;
       }
-    } catch (error) {
-      error.value = error;
+    } catch (e) {
+      error.value = e;
       loading.value = false;
-      throw error;
+      throw e;
     }
 
     loading.value = false;
