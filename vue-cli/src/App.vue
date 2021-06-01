@@ -1,9 +1,7 @@
 <template>
-  <va-navbar color="dark" class="mb-2">
-    <template #left>
-      <va-navbar-item>QV Checker</va-navbar-item>
-    </template>
-  </va-navbar>
+  <va-app-bar color="dark" class="mb-2 pa-4 header row justify--center">
+    <span class="color-white">QV Checker</span>
+  </va-app-bar>
   <Checker />
 </template>
 

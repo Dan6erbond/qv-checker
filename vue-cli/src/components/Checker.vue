@@ -1,5 +1,5 @@
 <template>
-  <div class="checker p-4">
+  <div class="pa-4">
     <va-form tag="form" @submit.prevent="submit" v-if="editing">
       <va-input
         class="mb-4"
@@ -26,7 +26,7 @@
         :mask="{ date: true, delimiter: '.', datePattern: ['d', 'm', 'Y'] }"
         name="birthday"
       />
-      <div class="submit-container">
+      <div class="row justify--end">
         <va-button type="submit">Submit</va-button>
       </div>
     </va-form>
@@ -110,14 +110,3 @@
     },
   });
 </script>
-
-<style scoped>
-  .checker {
-    padding: 2rem;
-  }
-
-  .submit-container {
-    display: flex;
-    flex-direction: row-reverse;
-  }
-</style>
