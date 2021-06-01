@@ -87,9 +87,13 @@
         start();
       });
 
-      const submit = () => {
+      const submit = async () => {
         if (ahvNr.value && birthdate.value) {
           editing.value = false;
+          await load({
+            ahvNr: ahvNr.value,
+            birthdate: birthdate.value,
+          });
           start();
         }
       };
