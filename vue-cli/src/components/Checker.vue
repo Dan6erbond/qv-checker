@@ -35,39 +35,43 @@
       <va-card-content>
         <va-list-item>
           <va-list-item-section> First Name </va-list-item-section>
-          <va-list-item-label caption v-if="results">
-            {{ results.vorname }}
-          </va-list-item-label>
-          <va-list-item-label caption v-else>
-            <va-progress-circle size="sm" indeterminate />
-          </va-list-item-label>
+          <va-list-item-section>
+            <va-list-item-label class="row justify--space-between" caption>
+              <span v-if="results">{{ results.vorname }}</span>
+              <va-progress-circle size="1rem" indeterminate v-if="loading" />
+            </va-list-item-label>
+          </va-list-item-section>
         </va-list-item>
         <va-list-item>
           <va-list-item-section> Last Name </va-list-item-section>
-          <va-list-item-label caption v-if="results">
-            {{ results.name }}
-          </va-list-item-label>
-          <va-list-item-label caption v-else>
-            <va-progress-circle size="sm" indeterminate />
-          </va-list-item-label>
+          <va-list-item-section>
+            <va-list-item-label class="row justify--space-between" caption>
+              <span v-if="results">{{ results.name }}</span>
+              <va-progress-circle size="1rem" indeterminate v-if="loading" />
+            </va-list-item-label>
+          </va-list-item-section>
         </va-list-item>
         <va-list-item>
           <va-list-item-section> Job Title </va-list-item-section>
-          <va-list-item-label caption v-if="results">
-            {{ results.berufBezeichnung }}
-          </va-list-item-label>
-          <va-list-item-label caption v-else>
-            <va-progress-circle size="sm" indeterminate />
-          </va-list-item-label>
+          <va-list-item-section>
+            <va-list-item-label class="row justify--space-between" caption>
+              <span v-if="results">
+                {{ results.berufBezeichnung }}
+              </span>
+              <va-progress-circle size="1rem" indeterminate v-if="loading" />
+            </va-list-item-label>
+          </va-list-item-section>
         </va-list-item>
         <va-list-item>
           <va-list-item-section> Result </va-list-item-section>
-          <va-list-item-label caption v-if="results">
-            {{ results.freigabeResultat }}
-          </va-list-item-label>
-          <va-list-item-label caption v-else>
-            <va-progress-circle size="sm" indeterminate />
-          </va-list-item-label>
+          <va-list-item-section>
+            <va-list-item-label class="row justify--space-between" caption>
+              <span v-if="results">
+                {{ results.freigabeResultat }}
+              </span>
+              <va-progress-circle size="1rem" indeterminate v-if="loading" />
+            </va-list-item-label>
+          </va-list-item-section>
         </va-list-item>
         <va-list-item v-if="loading">
           <div class="row justify--center">
