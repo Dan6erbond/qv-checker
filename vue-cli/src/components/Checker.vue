@@ -1,6 +1,6 @@
 <template>
   <div class="pa-4">
-    <va-form tag="form" @submit.prevent="submit" v-if="editing">
+    <va-form tag="form" @submit.prevent="submit" v-if="!isSignedIn">
       <va-input
         class="mb-4"
         label="AHV-Nr."
@@ -26,6 +26,7 @@
         :mask="{ date: true, delimiter: '.', datePattern: ['d', 'm', 'Y'] }"
         name="birthday"
       />
+      <va-checkbox class="mt-4" v-model="remember" label="Remember Me" />
       <div class="row justify--end">
         <va-button type="submit">Submit</va-button>
       </div>
@@ -74,9 +75,7 @@
           </va-list-item-section>
         </va-list-item>
         <va-list-item>
-          <va-progress-bar
-            :model-value="((countdownTime - countdown) * 100) / countdownTime"
-          />
+          <va-progress-bar :model-value="countdownPercentage" />
         </va-list-item>
       </va-card-content>
     </va-card>
@@ -84,51 +83,65 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, ref, watch } from "vue";
-  import { useCountdown } from "@/hooks/useCountdown";
   import { useQvResults } from "@/hooks/useQvResults";
+  import { useAccessInfo } from "@/hooks/useAccessInfo";
+  import { useSignedIn } from "@/hooks/useSignedIn";
+  import { computed, defineComponent, ref, watch } from "vue";
 
   export default defineComponent({
     name: "HelloWorld",
     setup: () => {
-      const ahvNr = ref("");
-      const birthdate = ref("");
-      const editing = ref(true);
-      const countdownTime = 5 * 60;
-      const { data: results, load, loading, error } = useQvResults();
-
-      const { start, countdown } = useCountdown(countdownTime, async () => {
-        await load({
-          ahvNr: ahvNr.value,
-          birthdate: birthdate.value,
-        });
-        start();
-      });
+      const remember = ref(false);
+      const { ahvNr, birthdate, clear } = useAccessInfo(remember);
+      const countdownTime = 5;
+      const fetchParams = computed(() => ({
+        ahvNr: ahvNr.value,
+        birthdate: birthdate.value,
+      }));
+      const {
+        start,
+        data: results,
+        loading,
+        error,
+        countdown,
+        reset,
+      } = useQvResults(countdownTime, fetchParams);
+      const { isSignedIn, signIn } = useSignedIn();
 
       const submit = async () => {
         if (ahvNr.value && birthdate.value) {
-          editing.value = false;
-          await load({
-            ahvNr: ahvNr.value,
-            birthdate: birthdate.value,
-          });
-          start();
+          signIn();
         }
       };
+
+      watch(isSignedIn, (isSignedIn) => {
+        if (isSignedIn) {
+          start();
+        } else {
+          reset();
+        }
+      });
 
       watch(error, (error) => {
         console.error(error);
       });
 
+      const countdownPercentage = computed(
+        () => ((countdownTime - countdown.value) * 100) / countdownTime,
+      );
+
       return {
         ahvNr,
         birthdate,
-        editing,
         submit,
         results,
         countdown,
         countdownTime,
         loading,
+        countdownPercentage,
+        remember,
+        clear,
+        isSignedIn,
       };
     },
   });

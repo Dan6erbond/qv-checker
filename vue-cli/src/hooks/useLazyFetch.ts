@@ -1,6 +1,9 @@
-import { ref } from "@vue/reactivity";
+import { Ref, ref } from "@vue/reactivity";
 
-export const useLazyFetch = <T>(input: RequestInfo, init?: RequestInit) => {
+export const useLazyFetch = <T>(
+  input: Ref<RequestInfo>,
+  init?: Ref<RequestInit>,
+) => {
   const data = ref({} as T);
   const loading = ref(false);
   const error = ref({} as any);
@@ -9,7 +12,10 @@ export const useLazyFetch = <T>(input: RequestInfo, init?: RequestInit) => {
     let dat: T | null = null;
     try {
       loading.value = true;
-      const res = await fetch(input, Object.assign({}, init, _init));
+      const res = await fetch(
+        input.value,
+        Object.assign({}, init?.value, _init),
+      );
       if (!res.ok || !res.status.toString().startsWith("2")) {
         const e = await res.text();
         error.value = e;
