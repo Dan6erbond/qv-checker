@@ -93,7 +93,7 @@
     setup: () => {
       const remember = ref(false);
       const { ahvNr, birthdate, clear } = useAccessInfo(remember);
-      const countdownTime = 5;
+      const pollTime = 5 * 60;
       const fetchParams = computed(() => ({
         ahvNr: ahvNr.value,
         birthdate: birthdate.value,
@@ -105,7 +105,7 @@
         error,
         countdown,
         reset,
-      } = useQvResults(countdownTime, fetchParams);
+      } = useQvResults(pollTime, fetchParams);
       const { isSignedIn, signIn } = useSignedIn();
 
       const submit = async () => {
@@ -127,7 +127,7 @@
       });
 
       const countdownPercentage = computed(
-        () => ((countdownTime - countdown.value) * 100) / countdownTime,
+        () => ((pollTime - countdown.value) * 100) / pollTime,
       );
 
       return {
@@ -136,7 +136,6 @@
         submit,
         results,
         countdown,
-        countdownTime,
         loading,
         countdownPercentage,
         remember,
