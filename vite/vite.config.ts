@@ -10,34 +10,17 @@ export default defineConfig({
       "@": join(__dirname, "src"),
     },
   },
-  optimizeDeps: {
-    exclude: [
-      "vuestic-ui",
-      "@popperjs/core",
-      "asva-executors",
-      "cleave.js",
-      "colortranslator",
-      "css-minimizer-webpack-plugin",
-      "detect-browser",
-      "element-resize-detector",
-      "flatpickr",
-      "gravatar",
-      "lodash",
-      "normalize.css",
-      "spa-http-server",
-      "v-tooltip",
-      "vue-color",
-      "vue-epic-bus",
-      "vue-flatpickr-component",
-      "vue-router",
-    ],
-  },
+  optimizeDeps: {},
   build: {
     rollupOptions: {
       onwarn(warning, warn) {
         // suppress eval warnings
         if (warning.code === "EVAL") {
-          console.error(`${warning.loc.file} [${warning.loc.line}:${warning.loc.column}]`, "-", warning.message);
+          console.error(
+            `${warning.loc.file} [${warning.loc.line}:${warning.loc.column}]`,
+            "-",
+            warning.message,
+          );
         }
         warn(warning);
       },
