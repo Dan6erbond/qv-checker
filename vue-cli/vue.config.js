@@ -2,8 +2,7 @@ module.exports = {
   chainWebpack: (config) => {
     config.plugin("html").tap((args) => {
       args[0].title = "QV Checker";
-      args[0].description =
-        "A simple web app to generate markdown and HTML hyperlinks using source metadata.";
+      args[0].description = "Qualifikationsverfahren Result-Checker for 2021.";
       return args;
     });
   },
