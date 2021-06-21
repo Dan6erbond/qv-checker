@@ -16,7 +16,8 @@
 
 <script lang="ts">
   import { useSignedIn } from "@/hooks/useSignedIn";
-  import { defineComponent } from "vue";
+  import { useUpdate } from "@/hooks/useUpdate";
+  import { defineComponent, onMounted } from "vue";
   import Checker from "./components/Checker.vue";
 
   export default defineComponent({
@@ -26,6 +27,11 @@
     },
     setup: () => {
       const { isSignedIn, signOut } = useSignedIn();
+      const { refreshApp } = useUpdate(() => {
+        if (confirm("An update is available! Would you like to refresh?")) {
+          refreshApp();
+        }
+      });
 
       return { signOut, isSignedIn };
     },
