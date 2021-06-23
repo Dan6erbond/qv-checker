@@ -8,28 +8,36 @@ const headers = {
 };
 
 const handler: Handler = async function (event) {
-  const { ahvNr, birthdate } = JSON.parse(event.body!);
+  if (event.httpMethod === "POST") {
+    const { ahvNr, birthdate } = JSON.parse(event.body!);
 
-  const res = await fetch(
-    "https://www.ag.ch/app/qvserviceapi/services/qv_info/kandidat",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        ahvNr,
-        geburtsdatum: birthdate,
-      }),
-    }
-  );
+    const res = await fetch(
+      "https://www.ag.ch/app/qvserviceapi/services/qv_info/kandidat",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ahvNr,
+          geburtsdatum: birthdate,
+        }),
+      }
+    );
 
-  const json = await res.json();
+    const json = await res.json();
+
+    return {
+      headers,
+      statusCode: 200,
+      body: JSON.stringify(json),
+    };
+  }
 
   return {
     headers,
     statusCode: 200,
-    body: JSON.stringify(json),
+    body: "Preflight call.",
   };
 };
 
