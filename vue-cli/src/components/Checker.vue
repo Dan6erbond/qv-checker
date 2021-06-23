@@ -106,6 +106,11 @@
         countdown,
         reset,
       } = useQvResults(pollTime, fetchParams);
+      watch(results, (results) => {
+        console.groupCollapsed("[RESULTS]:");
+        console.table(results);
+        console.groupEnd();
+      });
       const { isSignedIn, signIn } = useSignedIn();
 
       const submit = async () => {
