@@ -13,7 +13,7 @@
     "dayjs": "^1.10.5",
     "register-service-worker": "^1.7.1",
     "vue": "^3.0.0",
-    "vuestic-ui": "*"
+    "vuestic-ui": "1.1.2"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.18.0",
